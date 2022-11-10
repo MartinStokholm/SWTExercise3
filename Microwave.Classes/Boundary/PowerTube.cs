@@ -6,10 +6,15 @@ namespace Microwave.Classes.Boundary
     public class PowerTube : IPowerTube
     {
         private IOutput myOutput;
-        private int maxValue = 700;
+        // Default value of maxValue for the powertube
+        private int _maxValue = 700;
 
         private bool IsOn = false;
 
+        public PowerTube(IOutput output, int maxValue) : this(output)
+        {
+            _maxValue = maxValue;
+        }
         public PowerTube(IOutput output)
         {
             myOutput = output;
@@ -17,7 +22,7 @@ namespace Microwave.Classes.Boundary
 
         public void TurnOn(int power)
         {
-            if (power < 1 || maxValue < power)
+            if (power < 1 || _maxValue < power)
             {
                 throw new ArgumentOutOfRangeException("power", power, "Must be between 1 and 700 (incl.)");
             }
