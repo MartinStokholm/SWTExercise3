@@ -61,5 +61,37 @@ namespace Microwave.Test.Unit
             uut.TurnOn(50);
             Assert.Throws<System.ApplicationException>(() => uut.TurnOn(60));
         }
+
+
+        [TestCase(-1)]
+        [TestCase(0)]
+        [TestCase(299)]
+        [TestCase(1001)]
+        public void ChangeMaxValue_ThrowsException(int changeValue)
+        {
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => uut.ChangeMaxValue(changeValue));
+        }
+
+        [TestCase(300, 300)]
+        [TestCase(699, 699)]
+        [TestCase(1000, 1000)]
+        public void ChangeMaxValue_WasOffCorrectPower_CorrectOutput(int changeValue, int power)
+        {
+            uut.ChangeMaxValue(changeValue);
+            uut.TurnOn(power);
+
+            output.Received().OutputLine(Arg.Is<string>(str => str.Contains($"{power}")));
+        }
+
+        [TestCase(300, 400)]
+        [TestCase(699, 700)]
+        [TestCase(1000, 1001)]
+        public void ChangeMaxValue_WasOffWrongPower_ThrowsException(int changeValue, int power)
+        {
+            uut.ChangeMaxValue(changeValue);
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => uut.TurnOn(power));
+        }
+
+
     }
 }
