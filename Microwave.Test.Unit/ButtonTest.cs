@@ -8,9 +8,11 @@ namespace Microwave.Test.Unit
     {
         private Button uut;
 
+
         [SetUp]
         public void Setup()
         {
+            
             uut = new Button();
         }
 
