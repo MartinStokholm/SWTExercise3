@@ -73,6 +73,7 @@ namespace Microwave.Test.Unit
         }
 
         [TestCase(300, 300)]
+        [TestCase(699, 600)]
         [TestCase(699, 699)]
         [TestCase(1000, 1000)]
         public void ChangeMaxValue_WasOffCorrectPower_CorrectOutput(int changeValue, int power)
