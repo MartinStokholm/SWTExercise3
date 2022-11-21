@@ -22,10 +22,16 @@ namespace Microwave.Classes.Boundary
         }
 
 
-        public void Start(int time)
+        public void Start()
         {
-            TimeRemaining = time;
             timer.Enabled = true;
+        }
+        
+        public void progressivetimer()
+        {
+            if (TimeRemaining <= 0) TimeRemaining = 1000;
+                
+            TimeRemaining = TimeRemaining * 2;
         }
 
         public void Stop()
