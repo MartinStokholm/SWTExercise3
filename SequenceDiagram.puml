@@ -1,0 +1,31 @@
+@startuml
+
+actor "User" as user
+participant ":Door" as door
+participant "PowerButton:\nButton " as powerbutton 
+participant "TimerButton:\nButton" as timerbutton
+participant "Start-CancelButton:\n Button " as startbutton
+participant ": UserInterface" as ui 
+participant ": Display" as display
+participant ": Light" as light
+participant ": CookController" as cookcontroller
+participant ": Timer" as timer
+participant ": PowerTube" as powertube 
+participant ": Output" as output 
+
+user -> door : Open Door
+activate door
+door -> ui : <<event>> OnDoorOpened()
+deactivate door
+activate ui
+ui -> cookcontroller : Stop()
+activate cookcontroller
+cookcontroller -> timer : Stop()
+cookcontroller -> powertube : TurnOff()
+activate powertube
+powerbutton -> output : LogLine()
+deactivate powertube
+deactivate cookcontroller
+ui -> Display : Clear()
+
+@enduml
