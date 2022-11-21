@@ -74,7 +74,11 @@ namespace Microwave.Classes.Controllers
                     time += 1;
                     myDisplay.ShowTime(time, 0);
                     break;
-            }
+                case States.COOKING:
+                    myCooker.AddTimeToRemaining(1);
+                    myDisplay.ShowTime(time, 0);
+                    break;
+            }   
         }
 
         public void OnStartCancelPressed(object sender, EventArgs e)
