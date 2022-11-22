@@ -75,7 +75,7 @@ namespace Microwave.Classes.Controllers
                     myDisplay.ShowTime(time, 0);
                     break;
                 case States.COOKING:
-                    myCooker.AddTimeToRemaining(1);
+                    myCooker.AddTimeToRemaining(time);
                     myDisplay.ShowTime(time, 0);
                     break;
             }   
