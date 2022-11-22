@@ -244,21 +244,6 @@ namespace Microwave.Test.Unit
         }
 
         [Test]
-        public void SetTime_TimeButton_WhileCooking()
-        {
-            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            // Now in SetPower
-            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            // Now in SetTime
-            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-            // Now cooking
-            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
-
-        }
-
-
-
-        [Test]
         public void Cooking_CookingIsDone_LightOff()
         {
             powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
