@@ -162,6 +162,20 @@ namespace Microwave.Test.Unit
             display.Received(1).ShowTime(Arg.Is<int>(2), Arg.Is<int>(0));
         }
 
+
+        [Test]
+        public void SetPower_3TimeButton_TimeIs4()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+
+
+            display.Received(1).ShowTime(Arg.Is<int>(4), Arg.Is<int>(0));
+        }
+        
         [Test]
         public void SetTime_StartButton_CookerIsCalled()
         {
@@ -339,6 +353,7 @@ namespace Microwave.Test.Unit
 
             light.Received(1).TurnOff();
         }
+
 
 
     }

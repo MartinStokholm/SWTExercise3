@@ -74,7 +74,7 @@ namespace Microwave.Classes.Controllers
                     myState = States.SETTIME;
                     break;
                 case States.SETTIME:
-                    time += 1;
+                    time *= 2;
                     myDisplay.ShowTime(time, 0);
                     break;
                 case States.COOKING:
