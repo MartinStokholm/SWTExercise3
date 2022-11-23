@@ -36,20 +36,20 @@ namespace Microwave.App
             cooker.UI = ui;
 
             // Simulate a simple sequence
-
+            powerTube.ChangeMaxValue(600);
             powerButton.Press();
 
             timeButton.Press();
-            
+
             timeButton.Press();
-            
+
             timeButton.Press();
-            
+
             timeButton.Press();
-            
+
             startCancelButton.Press();
 
-            
+
             timeButton.Press();
             // The simple sequence should now run
 
