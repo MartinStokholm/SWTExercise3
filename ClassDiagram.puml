@@ -11,6 +11,18 @@ class Ligth
 class UserInterface
 class Door
 class Button 
+class Buzzer
+
+class IDisplay
+class IOutput
+class ICoockController
+class IPowerTube
+class ITimer
+class ILigth
+class IUserInterface
+class IDoor
+class IButton 
+class IBuzzer
 
 CoockController <-d-> Timer
 CoockController -l-> PowerTube
