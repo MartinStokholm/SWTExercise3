@@ -1,4 +1,5 @@
 @startuml
+!theme plain
 
 actor "User" as user
 participant ":Door" as door
@@ -77,6 +78,47 @@ ui ->> light : TurnOn()
 activate light
 light ->> output : LogLine()
 deactivate light
-ui ->> 
+ui ->> cookcontroller : StartCooking()
+activate cookcontroller
+cookcontroller ->> timer : Start()
+cookcontroller ->> powertube : TurnOn()
+deactivate cookcontroller
+activate powertube
+powertube ->> output : LogLine()
+
+hnote over ui : Cooking
+loop [until time expired]
+timer -> cookcontroller : <<event>> OnTimerTick()
+activate cookcontroller
+cookcontroller ->> timer : get TimeRemaining
+activate timer
+timer --> cookcontroller : 
+deactivate timer
+cookcontroller ->> display : ShowTime()
+deactivate cookcontroller
+activate display
+display ->> output : LogLine()
+end
+
+timer -> cookcontroller : <<event>> OnTimerExpired()
+activate cookcontroller
+cookcontroller ->> powertube : TurnOff()
+activate powertube
+powertube ->> output : LogLine 
+deactivate powertube
+cookcontroller ->> ui : CookingIsDone()
+deactivate cookcontroller
+activate ui
+ui ->> display : Clear()
+activate display
+display ->> output : LogLine()
+deactivate display
+ui ->> light : TurnOff()
+deactivate ui
+activate light 
+light ->> output : LogLine()
+deactivate light
+
+hnote over ui : Ready
 
 @enduml
