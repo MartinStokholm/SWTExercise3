@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
@@ -354,8 +354,21 @@ namespace Microwave.Test.Unit
             light.Received(1).TurnOff();
         }
 
+        [Test]
+        public void Cooking_TimeButton_AddTimeToRemaining_Called()
+        {
+            powerButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetPower
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in SetTime
+            startCancelButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
+            // Now in cooking
 
+            // Press time button
+            timeButton.Pressed += Raise.EventWith(this, EventArgs.Empty);
 
+            // Assert
+            cooker.Received(1).AddTimeToRemaining();
+        }
     }
-
 }
