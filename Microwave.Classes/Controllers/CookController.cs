@@ -37,9 +37,9 @@ namespace Microwave.Classes.Controllers
             timer.TimerTick += new EventHandler(OnTimerTick);
         }
 
-        public void AddTimeToRemaining()
+        public void AddTimeToRemaining(int timeToAdd)
         {
-            myTimer.TimeRemaining += 10;
+            myTimer.TimeRemaining += timeToAdd;
         }
         
         public void StartCooking(int power, int time)
