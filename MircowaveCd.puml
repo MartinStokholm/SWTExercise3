@@ -1,0 +1,45 @@
+@startuml
+
+hide members
+
+class Display
+class Output
+class CoockController
+class PowerTube
+class Timer
+class Ligth
+class UserInterface
+class Door
+class Button 
+class Buzzer
+
+class IDisplay
+class IOutput
+class ICoockController
+class IPowerTube
+class ITimer
+class ILigth
+class IUserInterface
+class IDoor
+class IButton 
+class IBuzzer
+
+CoockController <-d-> Timer
+CoockController -l-> PowerTube
+CoockController -u-> Display
+CoockController <-r-> UserInterface
+  UserInterface -l-> Display
+  UserInterface -u-> Ligth
+
+ 
+ UserInterface .d.> Button
+ UserInterface .d.> Door
+ Door -r-> UserInterface
+ Button -d-> UserInterface 
+
+Output <-r- Ligth
+Output <-r- Display
+Output <-d- PowerTube 
+
+
+@enduml

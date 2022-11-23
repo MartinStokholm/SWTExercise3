@@ -28,25 +28,35 @@ namespace Microwave.App
 
             CookController cooker = new CookController(timer, display, powerTube);
 
-            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker);
+            Buzzer buzzer = new Buzzer(output);
+
+            UserInterface ui = new UserInterface(powerButton, timeButton, startCancelButton, door, display, light, cooker, buzzer);
 
             // Finish the double association
             cooker.UI = ui;
 
             // Simulate a simple sequence
-
+            powerTube.ChangeMaxValue(600);
             powerButton.Press();
+
+            timeButton.Press();
+
+            timeButton.Press();
+
+            timeButton.Press();
 
             timeButton.Press();
 
             startCancelButton.Press();
 
+
+            timeButton.Press();
             // The simple sequence should now run
 
-            System.Console.WriteLine("When you press enter, the program will stop");
+            Console.WriteLine("When you press enter, the program will stop");
             // Wait for input
 
-            System.Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }
