@@ -87,9 +87,10 @@ namespace Microwave.Test.Unit
         public void Cooking_Start_AddTimeToRemaining()
         {
             uut.StartCooking(50, 60);
-            uut.AddTimeToRemaining(60);
+            
+            uut.AddTimeToRemaining();
 
-            timer.Received().TimeRemaining += 60;
+            Assert.That(timer.TimeRemaining, Is.EqualTo(10));
         }
 
     }
