@@ -7,10 +7,10 @@ class Output
 class CoockController
 class PowerTube
 class Timer
-class Ligth
+class Light
 class UserInterface
 class Door
-class Button 
+class Button
 class Buzzer
 
 class IDisplay
@@ -18,28 +18,41 @@ class IOutput
 class ICoockController
 class IPowerTube
 class ITimer
-class ILigth
+class ILight
 class IUserInterface
 class IDoor
-class IButton 
+class IButton
 class IBuzzer
+class IUserInterface
 
-CoockController <-d-> Timer
-CoockController -l-> PowerTube
-CoockController -u-> Display
-CoockController <-r-> UserInterface
-  UserInterface -l-> Display
-  UserInterface -u-> Ligth
+CoockController <|.d.|> ITimer
+CoockController .l.|> IPowerTube
+CoockController .u.|> IDisplay
+CoockController <|.u.|> IUserInterface
 
- 
- UserInterface .d.> Button
- UserInterface .d.> Door
- Door -r-> UserInterface
- Button -d-> UserInterface 
+Buzzer .l.|> IOutput
+Display .l.|> IOutput
+Light .l.|> IOutput
+PowerTube .r.|> IOutput
 
-Output <-r- Ligth
-Output <-r- Display
-Output <-d- PowerTube 
+
+UserInterface .u.|> IButton
+UserInterface .u.|> IDoor
+UserInterface .d.|> ILight
+UserInterface .u.|> IBuzzer
+UserInterface .d.|> IDisplay
+UserInterface .d.|> ICoockController
+
+CoockController .d.|> ICoockController
+UserInterface .d.|> IUserInterface
+Display .d.|> IDisplay
+PowerTube .d.|> IPowerTube
+Timer .r.|> ITimer
+Light .d.|> ILight
+Door .d.|> IDoor
+Button .d.|> IButton
+Buzzer .d.|> IBuzzer
+Output .d.|> IOutput
 
 
 @enduml
