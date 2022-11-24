@@ -37,6 +37,11 @@ namespace Microwave.Classes.Controllers
             timer.TimerTick += new EventHandler(OnTimerTick);
         }
 
+        public void AddTimeToRemaining()
+        {
+            myTimer.TimeRemaining += 10;
+        }
+        
         public void StartCooking(int power, int time)
         {
             myPowerTube.TurnOn(power);
@@ -64,7 +69,7 @@ namespace Microwave.Classes.Controllers
         public void OnTimerTick(object sender, EventArgs e)
         {
             if (isCooking)
-            {
+            { 
                 int remaining = myTimer.TimeRemaining;
                 myDisplay.ShowTime(remaining / 60, remaining % 60);
             }

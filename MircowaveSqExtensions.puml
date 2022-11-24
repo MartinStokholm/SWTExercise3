@@ -1,0 +1,63 @@
+@startuml
+!theme plain
+
+actor "User" as user
+participant ":Door" as door
+participant "Start-CancelButton:\n Button " as startbutton
+participant ": UserInterface" as ui 
+participant ": Display" as display
+participant ": Light" as light
+participant ": CookController" as cookcontroller
+participant ": Timer" as timer
+participant ": PowerTube" as powertube 
+participant ": Output" as output 
+
+hnote over ui : Cooking
+user -> door : Open Door
+activate door
+door -> ui : <<event>> OnDoorOpened()
+deactivate door
+activate ui
+ui -> cookcontroller : Stop()
+activate cookcontroller
+cookcontroller -> timer : Stop()
+cookcontroller -> powertube : TurnOff()
+activate powertube
+powertube -> output : LogLine()
+deactivate powertube
+deactivate cookcontroller
+ui -> display : Clear()
+activate display
+deactivate ui
+display -> output : LogLine()
+deactivate display
+hnote over ui : DoorIsOpen
+== ==
+hnote over ui : Cooking
+user -> startbutton : Presses Start-Cencel Button
+activate startbutton
+startbutton -> ui : <<event>> OnStartCancelPressed()
+deactivate startbutton
+activate ui
+ui -> cookcontroller : Stop()
+activate cookcontroller
+cookcontroller -> timer : Stop()
+cookcontroller -> powertube : TurnOff()
+activate powertube
+powertube -> output : LogLine()
+deactivate powertube
+deactivate cookcontroller
+ui -> display : Clear()
+activate display
+display -> output : LogLine()
+deactivate display
+ui -> light : Turnoff()
+deactivate ui
+activate light
+light -> output : LogLine()
+deactivate light
+hnote over ui : Ready
+
+
+
+@enduml

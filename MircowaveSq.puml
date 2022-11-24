@@ -1,0 +1,139 @@
+@startuml
+!theme plain
+
+actor "User" as user
+participant ":Door" as door
+participant "PowerButton:\nButton " as powerbutton 
+participant "TimerButton:\nButton" as timerbutton
+participant "Start-CancelButton:\n Button " as startbutton
+participant ": UserInterface" as ui 
+participant ": Display" as display
+participant ": Light" as light
+participant ": Buzzer" as buzzer 
+participant ": CookController" as cookcontroller
+participant ": Timer" as timer
+participant ": PowerTube" as powertube 
+participant ": Output" as output 
+
+
+hnote over ui : Ready
+user ->> door : open 
+activate door 
+door ->> ui : <<event>> OnDoorOpened()
+deactivate door 
+activate ui 
+ui ->> light : TurnOn()
+deactivate ui 
+activate light
+light ->> output : LogLine()
+deactivate light
+
+hnote over ui : DoorIsOpen
+user ->> door : Closes Door
+activate door
+door ->> ui : <<event>> OnDoorClosed()
+deactivate door
+activate ui
+ui ->> light : TurnOff()
+deactivate ui
+activate light
+light ->> output : LogLine()
+deactivate light
+
+
+
+hnote over ui : Ready
+loop [until power set]
+user ->> door : Press Power Button
+activate door
+door ->> ui : <<event>> OnPowerPressed()
+deactivate door
+activate ui
+ui ->> display : ShowPower()
+deactivate ui
+activate display
+display ->> output : LogLine()
+deactivate display
+hnote over ui : SetPower
+end
+
+
+
+loop [until time set]
+user ->> door : PressPowerButton
+activate door
+door ->> ui : <<event>> OnTimePressed()
+deactivate door
+activate ui
+ui ->> display : ShowTime()
+deactivate ui
+activate display
+display ->> output : LogLine()
+deactivate display
+hnote over ui : SetTime
+end
+
+user ->> startbutton : Press Time Button 
+activate startbutton
+startbutton ->> ui : <<event>> OnStartCancelPressed()
+deactivate startbutton
+activate ui
+ui ->> light : TurnOn()
+activate light
+light ->> output : LogLine()
+
+deactivate light
+ui ->> cookcontroller : StartCooking()
+deactivate ui
+activate cookcontroller
+cookcontroller ->> timer : Start()
+cookcontroller ->> powertube : TurnOn()
+deactivate cookcontroller
+activate powertube
+powertube ->> output : LogLine()
+deactivate powertube
+
+
+hnote over ui : Cooking
+loop [until time expired]
+timer -> cookcontroller : <<event>> OnTimerTick()
+activate cookcontroller
+cookcontroller ->> timer : get TimeRemaining
+activate timer
+timer --> cookcontroller : 
+deactivate timer
+cookcontroller ->> display : ShowTime()
+deactivate cookcontroller
+activate display
+display ->> output : LogLine()
+deactivate display
+end
+
+timer -> cookcontroller : <<event>> OnTimerExpired()
+activate cookcontroller
+cookcontroller ->> powertube : TurnOff()
+activate powertube
+powertube ->> output : LogLine 
+
+deactivate powertube
+cookcontroller ->> ui : CookingIsDone()
+deactivate cookcontroller
+activate ui
+ui ->> display : Clear()
+activate display
+display ->> output : LogLine()
+deactivate display
+ui ->> light : TurnOff()
+deactivate ui
+activate light 
+light ->> output : LogLine()
+deactivate light
+ui ->> buzzer : Buzz()
+deactivate ui
+activate buzzer
+buzzer ->> output : LogLine()
+deactivate buzzer
+
+hnote over ui : Ready
+
+@enduml

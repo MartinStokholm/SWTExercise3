@@ -24,6 +24,7 @@ namespace Microwave.Test.Integration
         private Button startCancelButton;
 
         private Door door;
+        private Buzzer buzzer;
 
         [SetUp]
         public void Setup()
@@ -47,7 +48,7 @@ namespace Microwave.Test.Integration
             ui = new UserInterface(
                 powerButton, timeButton, startCancelButton,
                 door,
-                display, light, cooker);
+                display, light, cooker, buzzer);
 
             cooker.UI = ui;
 
