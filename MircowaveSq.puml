@@ -9,10 +9,12 @@ participant "Start-CancelButton:\n Button " as startbutton
 participant ": UserInterface" as ui 
 participant ": Display" as display
 participant ": Light" as light
+participant ": Buzzer" as buzzer 
 participant ": CookController" as cookcontroller
 participant ": Timer" as timer
 participant ": PowerTube" as powertube 
 participant ": Output" as output 
+
 
 hnote over ui : Ready
 user ->> door : open 
@@ -37,6 +39,8 @@ deactivate ui
 activate light
 light ->> output : LogLine()
 deactivate light
+
+
 
 hnote over ui : Ready
 loop [until power set]
@@ -77,14 +81,18 @@ activate ui
 ui ->> light : TurnOn()
 activate light
 light ->> output : LogLine()
+
 deactivate light
 ui ->> cookcontroller : StartCooking()
+deactivate ui
 activate cookcontroller
 cookcontroller ->> timer : Start()
 cookcontroller ->> powertube : TurnOn()
 deactivate cookcontroller
 activate powertube
 powertube ->> output : LogLine()
+deactivate powertube
+
 
 hnote over ui : Cooking
 loop [until time expired]
@@ -98,6 +106,7 @@ cookcontroller ->> display : ShowTime()
 deactivate cookcontroller
 activate display
 display ->> output : LogLine()
+deactivate display
 end
 
 timer -> cookcontroller : <<event>> OnTimerExpired()
@@ -105,6 +114,7 @@ activate cookcontroller
 cookcontroller ->> powertube : TurnOff()
 activate powertube
 powertube ->> output : LogLine 
+
 deactivate powertube
 cookcontroller ->> ui : CookingIsDone()
 deactivate cookcontroller
@@ -118,6 +128,11 @@ deactivate ui
 activate light 
 light ->> output : LogLine()
 deactivate light
+ui ->> buzzer : Buzz()
+deactivate ui
+activate buzzer
+buzzer ->> output : LogLine()
+deactivate buzzer
 
 hnote over ui : Ready
 
