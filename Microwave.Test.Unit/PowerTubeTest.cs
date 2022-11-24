@@ -65,21 +65,20 @@ namespace Microwave.Test.Unit
 
         [TestCase(-1)]
         [TestCase(0)]
-        [TestCase(299)]
         [TestCase(1001)]
         public void ChangeMaxValue_ThrowsException(int changeValue)
         {
-            Assert.Throws<System.ArgumentOutOfRangeException>(() => uut.ChangeMaxValue(changeValue));
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => new PowerTube(output, changeValue));
         }
 
-        [TestCase(300, 300)]
+        [TestCase(1, 1)]
         [TestCase(699, 600)]
         [TestCase(699, 699)]
         [TestCase(1000, 1000)]
         public void ChangeMaxValue_WasOffCorrectPower_CorrectOutput(int changeValue, int power)
         {
-            uut.ChangeMaxValue(changeValue);
-            uut.TurnOn(power);
+            var powertupe = new PowerTube(output, changeValue);
+            powertupe.TurnOn(power);
 
             output.Received().OutputLine(Arg.Is<string>(str => str.Contains($"{power}")));
         }
@@ -89,8 +88,8 @@ namespace Microwave.Test.Unit
         [TestCase(1000, 1001)]
         public void ChangeMaxValue_WasOffWrongPower_ThrowsException(int changeValue, int power)
         {
-            uut.ChangeMaxValue(changeValue);
-            Assert.Throws<System.ArgumentOutOfRangeException>(() => uut.TurnOn(power));
+            IPowerTube powertupe = new PowerTube(output, changeValue);
+            Assert.Throws<System.ArgumentOutOfRangeException>(() => powertupe.TurnOn(power));
         }
 
 
