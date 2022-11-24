@@ -88,8 +88,8 @@ namespace Microwave.Test.Unit
         {
             uut.StartCooking(50, 60);
             
-            uut.AddTimeToRemaining(); 
-            
+            uut.AddTimeToRemaining();
+
             Assert.That(timer.TimeRemaining, Is.EqualTo(10));
         }
 
