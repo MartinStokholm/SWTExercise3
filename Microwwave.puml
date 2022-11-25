@@ -6,16 +6,16 @@
 Ready -d-> SetPower : Press Power Button,\nDisplay Power
 
 
-Cooking -d-> Ready : Start-Cancel Button Pressed,\n Stop Cooking,\n Reset Values,\n Clear Display,\n Turn Off Light
-Cooking -d-> Ready : Cooking Finished,\n Reset Values,\n Clear Display,\n Turn Off Light
-Cooking -d-> SetTime : TimeButtonPressed
+Cooking -u-> Ready : Start-Cancel Button Pressed,\n Stop Cooking,\n Reset Values,\n Clear Display,\n Turn Off Light
+Cooking -u-> Ready : Cooking Finished,\n Reset Values,\n Clear Display,\n Turn Off Light
+Cooking --> SetTime : TimeButtonPressed
 
 DoorIsOpen -r-> Ready : DoorIsClosed,\n Turn Off Light
 
 SetPower --> Ready : Start-Cancel Button Pressed,\n Reset Values,\n Clear Display
 SetPower -r-> DoorIsOpen : DoorIsOpened,\n Reset Values,\n Turn on Light
 SetPower -d-> SetTime : TimeButtonPressed,\nDisplay Time
-SetPower --> SetPower : Press Power Button,\nIncrease Power,\nDisplay Power
+SetPower -r-> SetPower : Press Power Button,\nIncrease Power,\nDisplay Power
 
 SetTime --> SetTime : TimeButtonPressed,\nIncrease Time,\nDisplay Time
 SetTime -d-> Cooking : Start-Cancel Button Pressed,\n Start Cooking,\n Turn On Light
