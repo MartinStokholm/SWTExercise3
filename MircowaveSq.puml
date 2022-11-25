@@ -54,16 +54,37 @@ deactivate ui
 activate display
 display ->> output : LogLine()
 deactivate display
+
 hnote over ui : SetPower
+
+user ->> door : Press Power Button
+activate door
+door ->> ui : <<event>> OnPowerPressed()
+deactivate door
+activate ui
+ui ->> cookcontroller : GetMaximumPower()
+activate cookcontroller
+cookcontroller ->> powertube : Get MaxValue
+activate powertube
+powertube -->> cookcontroller : int
+deactivate powertube
+cookcontroller -->> ui : int
+deactivate cookcontroller
+ui ->> display : ShowPower()
+deactivate ui
+activate display
+display ->> output : LogLine()
+deactivate display
+
 end
 
 
 
 loop [until time set]
-user ->> door : PressPowerButton
-activate door
-door ->> ui : <<event>> OnTimePressed()
-deactivate door
+user ->> timerbutton : Press Time Button
+activate timerbutton
+timerbutton ->> ui : <<event>> OnTimePressed()
+deactivate timerbutton
 activate ui
 ui ->> display : ShowTime()
 deactivate ui
@@ -71,6 +92,18 @@ activate display
 display ->> output : LogLine()
 deactivate display
 hnote over ui : SetTime
+
+user ->> timerbutton : Press Time Button
+activate timerbutton
+timerbutton ->> ui : <<event>> OnTimePressed()
+deactivate timerbutton
+activate ui
+
+ui ->> display : ShowTime()
+deactivate ui
+activate display
+display ->> output : LogLine()
+deactivate display
 end
 
 user ->> startbutton : Press Time Button 
@@ -102,6 +135,14 @@ cookcontroller ->> timer : get TimeRemaining
 activate timer
 timer --> cookcontroller : 
 deactivate timer
+user ->> timerbutton : Press Time Button
+activate timerbutton
+timerbutton ->> ui : <<event>> OnTimePressed()
+deactivate timerbutton
+activate ui
+ui -> cookcontroller : AddTimeToRemaining()
+deactivate ui
+cookcontroller -> timer : Set TimeRemaining
 cookcontroller ->> display : ShowTime()
 deactivate cookcontroller
 activate display
